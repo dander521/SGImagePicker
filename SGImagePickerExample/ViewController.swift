@@ -10,6 +10,8 @@ import UIKit
 import SGImagePicker
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,12 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showPicker() {
-        let picker = SGImagePickerViewController.picker()
+        let picker = SGImagePickerViewController.picker() { image in
+            self.imageView.image = image
+            self.dismiss(animated: true, completion: {
+                
+            })
+        }
         present(picker, animated: true, completion: nil)
     }
 

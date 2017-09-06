@@ -20,6 +20,8 @@
 		512B88491F5FFCBD00B181B6 /* SGImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512B880D1F5FF13700B181B6 /* SGImagePicker.framework */; };
 		512B884D1F5FFCFA00B181B6 /* SGImagePicker.framework in Embed Framewors */ = {isa = PBXBuildFile; fileRef = 512B880D1F5FF13700B181B6 /* SGImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		512B885D1F60116F00B181B6 /* SupportingClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512B885C1F60116F00B181B6 /* SupportingClasses.swift */; };
+		512B885F1F60140C00B181B6 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512B885E1F60140C00B181B6 /* EditViewController.swift */; };
+		512B88611F602C3B00B181B6 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512B88601F602C3B00B181B6 /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		512B883D1F5FF26100B181B6 /* SGImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGImagePickerViewController.swift; sourceTree = "<group>"; };
 		512B88411F5FF47200B181B6 /* Interface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		512B885C1F60116F00B181B6 /* SupportingClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportingClasses.swift; sourceTree = "<group>"; };
+		512B885E1F60140C00B181B6 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		512B88601F602C3B00B181B6 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,9 +129,11 @@
 			children = (
 				512B88101F5FF13700B181B6 /* SGImagePicker.h */,
 				512B883D1F5FF26100B181B6 /* SGImagePickerViewController.swift */,
+				512B885E1F60140C00B181B6 /* EditViewController.swift */,
+				512B885C1F60116F00B181B6 /* SupportingClasses.swift */,
 				512B88411F5FF47200B181B6 /* Interface.storyboard */,
 				512B88111F5FF13700B181B6 /* Info.plist */,
-				512B885C1F60116F00B181B6 /* SupportingClasses.swift */,
+				512B88601F602C3B00B181B6 /* Media.xcassets */,
 			);
 			path = SGImagePicker;
 			sourceTree = "<group>";
@@ -280,6 +286,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				512B88611F602C3B00B181B6 /* Media.xcassets in Resources */,
 				512B88421F5FF47200B181B6 /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,6 +317,7 @@
 			files = (
 				512B883E1F5FF26100B181B6 /* SGImagePickerViewController.swift in Sources */,
 				512B885D1F60116F00B181B6 /* SupportingClasses.swift in Sources */,
+				512B885F1F60140C00B181B6 /* EditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

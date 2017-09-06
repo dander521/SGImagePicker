@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13165.3"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,7 +14,7 @@
         <!--Image Picker View Controller-->
         <scene sceneID="zPT-ag-X5T">
             <objects>
-                <viewController id="uXc-iD-OmQ" customClass="SGImagePickerViewController" customModule="SGImagePicker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SGImagePickerViewController" id="uXc-iD-OmQ" customClass="SGImagePickerViewController" customModule="SGImagePicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ek4-wZ-Yig">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,6 +74,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8FK-n9-pVN"/>
                     </view>
+                    <connections>
+                        <outlet property="previewViewContainer" destination="Om3-43-hsZ" id="9l4-g7-dHi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KO3-hw-mf2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

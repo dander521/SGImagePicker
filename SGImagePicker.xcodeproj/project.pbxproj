@@ -17,6 +17,8 @@
 		512B88381F5FF1D600B181B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 512B88361F5FF1D600B181B6 /* LaunchScreen.storyboard */; };
 		512B883E1F5FF26100B181B6 /* SGImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512B883D1F5FF26100B181B6 /* SGImagePickerViewController.swift */; };
 		512B88421F5FF47200B181B6 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 512B88411F5FF47200B181B6 /* Interface.storyboard */; };
+		512B88491F5FFCBD00B181B6 /* SGImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512B880D1F5FF13700B181B6 /* SGImagePicker.framework */; };
+		512B884D1F5FFCFA00B181B6 /* SGImagePicker.framework in Embed Framewors */ = {isa = PBXBuildFile; fileRef = 512B880D1F5FF13700B181B6 /* SGImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,7 +29,7 @@
 			remoteGlobalIDString = 512B880C1F5FF13700B181B6;
 			remoteInfo = SGImagePicker;
 		};
-		512B883F1F5FF27500B181B6 /* PBXContainerItemProxy */ = {
+		512B884A1F5FFCC000B181B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 512B88041F5FF13700B181B6 /* Project object */;
 			proxyType = 1;
@@ -35,6 +37,20 @@
 			remoteInfo = SGImagePicker;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		512B884C1F5FFCDA00B181B6 /* Embed Framewors */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				512B884D1F5FFCFA00B181B6 /* SGImagePicker.framework in Embed Framewors */,
+			);
+			name = "Embed Framewors";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		512B880D1F5FF13700B181B6 /* SGImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SGImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				512B88491F5FFCBD00B181B6 /* SGImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +104,7 @@
 				512B881A1F5FF13700B181B6 /* SGImagePickerTests */,
 				512B882C1F5FF1D600B181B6 /* SDImagePickerExample */,
 				512B880E1F5FF13700B181B6 /* Products */,
+				512B88431F5FFBFA00B181B6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +149,13 @@
 				512B88391F5FF1D600B181B6 /* Info.plist */,
 			);
 			path = SDImagePickerExample;
+			sourceTree = "<group>";
+		};
+		512B88431F5FFBFA00B181B6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,11 +215,12 @@
 				512B88271F5FF1D600B181B6 /* Sources */,
 				512B88281F5FF1D600B181B6 /* Frameworks */,
 				512B88291F5FF1D600B181B6 /* Resources */,
+				512B884C1F5FFCDA00B181B6 /* Embed Framewors */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				512B88401F5FF27500B181B6 /* PBXTargetDependency */,
+				512B884B1F5FFCC000B181B6 /* PBXTargetDependency */,
 			);
 			name = SDImagePickerExample;
 			productName = SDImagePickerExample;
@@ -240,8 +266,8 @@
 			projectRoot = "";
 			targets = (
 				512B880C1F5FF13700B181B6 /* SGImagePicker */,
-				512B88151F5FF13700B181B6 /* SGImagePickerTests */,
 				512B882A1F5FF1D600B181B6 /* SDImagePickerExample */,
+				512B88151F5FF13700B181B6 /* SGImagePickerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -308,10 +334,10 @@
 			target = 512B880C1F5FF13700B181B6 /* SGImagePicker */;
 			targetProxy = 512B88181F5FF13700B181B6 /* PBXContainerItemProxy */;
 		};
-		512B88401F5FF27500B181B6 /* PBXTargetDependency */ = {
+		512B884B1F5FFCC000B181B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 512B880C1F5FF13700B181B6 /* SGImagePicker */;
-			targetProxy = 512B883F1F5FF27500B181B6 /* PBXContainerItemProxy */;
+			targetProxy = 512B884A1F5FFCC000B181B6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -461,6 +487,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SGImagePicker/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sergeygarazha.SGImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -484,6 +511,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SGImagePicker/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sergeygarazha.SGImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -530,6 +558,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GDTL7HS4E2;
 				INFOPLIST_FILE = SDImagePickerExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sergeygarazha.SDImagePickerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -545,6 +574,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GDTL7HS4E2;
 				INFOPLIST_FILE = SDImagePickerExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sergeygarazha.SDImagePickerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";

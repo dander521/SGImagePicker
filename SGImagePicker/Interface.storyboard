@@ -38,6 +38,9 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="VdG-IN-crl" secondAttribute="height" id="tUb-0g-C62"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="takePhotoButtonAction:" destination="uXc-iD-OmQ" eventType="touchUpInside" id="VYL-Ot-9db"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5f-C0-DEb">
                                         <rect key="frame" x="323" y="8" width="44" height="44"/>

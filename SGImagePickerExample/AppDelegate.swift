@@ -1,12 +1,13 @@
 //
 //  AppDelegate.swift
-//  SDImagePickerExample
+//  SGImagePickerExample
 //
 //  Created by Sergey Garazha on 9/6/17.
 //  Copyright © 2017 sergeygarazha. All rights reserved.
 //
 
 import UIKit
+import SGImagePicker
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        let picker = SGImagePickerViewController.picker()
+        window?.rootViewController = picker
+        
         return true
     }
 

@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  SDImagePickerExample
+//  SGImagePickerExample
 //
 //  Created by Sergey Garazha on 9/6/17.
 //  Copyright © 2017 sergeygarazha. All rights reserved.
@@ -27,4 +27,3 @@ class ViewController: UIViewController {
     }
 
 }
-

@@ -13,6 +13,14 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if let vc = presentedViewController {
+            return vc.preferredStatusBarStyle
+        } else {
+            return .default
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

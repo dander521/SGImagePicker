@@ -15,6 +15,10 @@ class EditViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     class func instance() -> EditViewController {
         let bundle = Bundle(for: self.classForCoder())
         let storyboard = UIStoryboard(name: "Interface", bundle: bundle)

@@ -30,6 +30,10 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
     //MARK: getters
     
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return .portrait }
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+        
+    }
     
     //MARK: - INIT
     

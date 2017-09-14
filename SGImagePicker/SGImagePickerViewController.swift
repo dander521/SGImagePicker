@@ -203,11 +203,7 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
     }
     
     public func makePhoto() {
-        let photoSettings = AVCapturePhotoSettings()
-        if !photoSettings.availablePreviewPhotoPixelFormatTypes.isEmpty {
-            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoSettings.availablePreviewPhotoPixelFormatTypes.first!]
-        }
-        output.capturePhoto(with: photoSettings, delegate: self)
+        output.capturePhoto(with: AVCapturePhotoSettings(format: nil), delegate: self)
     }
     
     public func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {

@@ -21,17 +21,51 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Om3-43-hsZ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKh-qd-Pa6">
+                                <rect key="frame" x="0.0" y="20" width="375" height="587"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Failed to access to your camera. Try to open settings app and change access permissions." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CgH-qy-cKf">
+                                        <rect key="frame" x="30" y="283" width="315" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.86207170050761417" green="0.86207170050761417" blue="0.86207170050761417" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIe-el-djS">
+                                        <rect key="frame" x="143.5" y="304" width="87" height="48"/>
+                                        <inset key="contentEdgeInsets" minX="25" minY="15" maxX="25" maxY="15"/>
+                                        <state key="normal" title="Retry"/>
+                                        <connections>
+                                            <action selector="retryConfigure" destination="uXc-iD-OmQ" eventType="touchUpInside" id="mSg-eJ-aEU"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="wIe-el-djS" firstAttribute="centerX" secondItem="eKh-qd-Pa6" secondAttribute="centerX" id="1bT-KU-PAP"/>
+                                    <constraint firstItem="CgH-qy-cKf" firstAttribute="leading" secondItem="eKh-qd-Pa6" secondAttribute="leading" constant="30" id="20N-h6-nBN"/>
+                                    <constraint firstItem="wIe-el-djS" firstAttribute="top" secondItem="CgH-qy-cKf" secondAttribute="bottom" id="Elo-KI-N88"/>
+                                    <constraint firstItem="CgH-qy-cKf" firstAttribute="centerY" secondItem="eKh-qd-Pa6" secondAttribute="centerY" id="MIb-kz-6t9"/>
+                                    <constraint firstAttribute="trailing" secondItem="CgH-qy-cKf" secondAttribute="trailing" constant="30" id="dL2-2P-KfL"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ow-qM-W4v">
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FtT-81-4Yx">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error" translatesAutoresizingMaskIntoConstraints="NO" id="FtT-81-4Yx">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="FtT-81-4Yx" secondAttribute="height" id="jdS-vm-W6Z"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKK-pe-ivS" userLabel="library Button">
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="library"/>
+                                        <connections>
+                                            <action selector="openLibraryButtonAction" destination="uXc-iD-OmQ" eventType="touchUpInside" id="Yhd-rq-FD6"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VdG-IN-crl">
                                         <rect key="frame" x="165" y="8" width="44" height="44"/>
                                         <constraints>
@@ -51,13 +85,6 @@
                                         <state key="normal" image="rotate"/>
                                         <connections>
                                             <action selector="switchFlashButtonAction" destination="uXc-iD-OmQ" eventType="touchUpInside" id="5sm-bv-UpI"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKK-pe-ivS">
-                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="library"/>
-                                        <connections>
-                                            <action selector="openLibraryButtonAction" destination="uXc-iD-OmQ" eventType="touchUpInside" id="Yhd-rq-FD6"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -82,19 +109,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="8FK-n9-pVN" firstAttribute="trailing" secondItem="eKh-qd-Pa6" secondAttribute="trailing" id="7KI-8w-qly"/>
                             <constraint firstItem="Om3-43-hsZ" firstAttribute="top" secondItem="ek4-wZ-Yig" secondAttribute="top" id="LJQ-3t-ZB1"/>
+                            <constraint firstItem="3ow-qM-W4v" firstAttribute="top" secondItem="eKh-qd-Pa6" secondAttribute="bottom" id="P1t-xr-2ia"/>
+                            <constraint firstItem="eKh-qd-Pa6" firstAttribute="leading" secondItem="8FK-n9-pVN" secondAttribute="leading" id="S4Z-AI-aid"/>
                             <constraint firstItem="3ow-qM-W4v" firstAttribute="trailing" secondItem="8FK-n9-pVN" secondAttribute="trailing" id="dHq-IG-Asa"/>
                             <constraint firstItem="Om3-43-hsZ" firstAttribute="trailing" secondItem="8FK-n9-pVN" secondAttribute="trailing" id="eVN-II-9iU"/>
                             <constraint firstItem="3ow-qM-W4v" firstAttribute="leading" secondItem="8FK-n9-pVN" secondAttribute="leading" id="gy0-q2-4d1"/>
                             <constraint firstItem="Om3-43-hsZ" firstAttribute="leading" secondItem="8FK-n9-pVN" secondAttribute="leading" id="iZq-zL-JnJ"/>
                             <constraint firstItem="3ow-qM-W4v" firstAttribute="bottom" secondItem="8FK-n9-pVN" secondAttribute="bottom" id="ikh-z2-Xp4"/>
+                            <constraint firstItem="eKh-qd-Pa6" firstAttribute="top" secondItem="8FK-n9-pVN" secondAttribute="top" id="sgz-6p-8Us"/>
                             <constraint firstItem="3ow-qM-W4v" firstAttribute="top" secondItem="Om3-43-hsZ" secondAttribute="bottom" id="yzl-py-5Tb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8FK-n9-pVN"/>
                     </view>
                     <connections>
+                        <outlet property="errorLabel" destination="CgH-qy-cKf" id="Smf-6m-ezr"/>
+                        <outlet property="errorView" destination="eKh-qd-Pa6" id="Uex-UK-YLi"/>
                         <outlet property="libraryImageView" destination="FtT-81-4Yx" id="otW-Ko-r2U"/>
                         <outlet property="previewViewContainer" destination="Om3-43-hsZ" id="9l4-g7-dHi"/>
+                        <outlet property="retryConfigureButton" destination="wIe-el-djS" id="Wpv-q3-Y5f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KO3-hw-mf2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -164,6 +198,7 @@
     </scenes>
     <resources>
         <image name="done" width="48" height="48"/>
+        <image name="error" width="44" height="39"/>
         <image name="rotate" width="48" height="48"/>
         <image name="shutter" width="40" height="40"/>
     </resources>

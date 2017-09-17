@@ -11,6 +11,39 @@ import AVFoundation
 import MobileCoreServices
 import Photos
 
+struct Platform {
+    static var isSimulator: Bool {
+        #if arch(i386) || arch(x86_64)
+            return true
+        #else
+            return false
+        #endif
+    }
+}
+
+enum CameraAccessStatus {
+    case allowed
+    case denied
+    case notDetermined
+}
+
+enum PreviewViewState {
+    case accessDenied
+    case configurationError(String)
+    case preview
+    case initial
+}
+
+enum LibraryButtonState {
+    case error
+    case preview(UIImage)
+    case initial
+}
+
+enum Constants: String {
+    case cameraAccessDenied = "Failed to access to your camera. Try to open settings app and change access permissions."
+}
+
 public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptureDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //MARK: - IVARS
@@ -19,6 +52,9 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
     
     @IBOutlet weak var previewViewContainer: UIView!
     @IBOutlet weak var libraryImageView: UIImageView!
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var retryConfigureButton: UIButton!
 
     //MARK: session ivars
     
@@ -34,6 +70,20 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
         return .lightContent
         
     }
+    var camearaStatus: CameraAccessStatus {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized: return .allowed
+        case .denied, .restricted: return .denied
+        case .notDetermined: return .notDetermined
+        }
+    }
+    var libraryStatus: CameraAccessStatus {
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized: return .allowed
+        case .denied, .restricted: return .denied
+        case .notDetermined: return .notDetermined
+        }
+    }
     
     //MARK: - INIT
     
@@ -45,10 +95,10 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
     }
     
     init() {
-        super.init(nibName: nil, bundle: nil)
+        fatalError("use SGImagePicker.picker()")
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -57,12 +107,14 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        if authorizationStatus() {
-            tryToConfig()
-            updateLibraryButton()
-        }
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
+        
+        if camearaStatus == .notDetermined {
+            setPreviewState(.initial)
+            setLibraryButtonState(.initial)
+        } else {
+            updateInterfaceForStatus() 
+        }
     }
     
     @objc func cancel() {
@@ -77,8 +129,81 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        tryToConfig()
-        updateLibraryButton()
+        updateInterfaceForStatus()
+    }
+    
+    //MARK: - UI STATES
+    
+    func updateInterfaceForStatus() {
+        switch camearaStatus {
+        case .allowed: setPreviewState(.preview)
+        case .denied: setPreviewState(.accessDenied)
+        case .notDetermined:
+            requestAccessToCamera {
+                self.updateInterfaceForStatus()
+            }
+            return
+        }
+        
+        switch libraryStatus {
+        case .allowed: updateLibraryButton()
+        case .denied: setLibraryButtonState(.error)
+        case .notDetermined:
+            setLibraryButtonState(.initial)
+            requestLibraryAccess {
+                DispatchQueue.main.async {
+                    self.updateInterfaceForStatus()
+                }
+            }
+        }
+    }
+    
+    //MARK: preview
+    
+    func setPreviewState(_ state: PreviewViewState) {
+        switch state {
+        case .initial:
+            errorView.isHidden = true
+            previewViewContainer.isHidden = false
+            retryConfigureButton.isHidden = true
+        case .accessDenied:
+            errorView.isHidden = false
+            errorLabel.text = Constants.cameraAccessDenied.rawValue
+            previewViewContainer.isHidden = true
+            retryConfigureButton.isHidden = false
+        case .configurationError(let er):
+            errorView.isHidden = false
+            errorLabel.text = er
+            previewViewContainer.isHidden = true
+            retryConfigureButton.isHidden = false
+        case .preview:
+            errorView.isHidden = true
+            previewViewContainer.isHidden = false
+            retryConfigureButton.isHidden = true
+            if session == nil || session!.isRunning == false {
+                do {
+                    try configure()
+                } catch let er {
+                    self.setPreviewState(.configurationError(er.localizedDescription))
+                }
+            }
+        }
+    }
+    
+    //MARK: library button
+    
+    func setLibraryButtonState(_ state: LibraryButtonState) {
+        switch state {
+        case .initial:
+            libraryImageView.backgroundColor = UIColor.lightGray
+            libraryImageView.image = nil
+        case .error:
+            libraryImageView.backgroundColor = UIColor.clear
+            libraryImageView.image = #imageLiteral(resourceName: "error")
+        case .preview(let image):
+            libraryImageView.backgroundColor = UIColor.clear
+            libraryImageView.image = image
+        }
     }
     
     func updateLibraryButton() {
@@ -98,49 +223,55 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
             // also available.
             _ = manager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil)
             { image, info in
-                self.libraryImageView.image = image
+                DispatchQueue.main.async {
+                    if let image = image {
+                        self.setLibraryButtonState(.preview(image))
+                    } else {
+                        self.setLibraryButtonState(.error)
+                    }
+                }
             }
         }
     }
     
-    //MARK: - AUTHORIZATION
+    //MARK: - ACCESS
     
-    func authorizationStatus() -> Bool {
-        let status = AVCaptureDevice.authorizationStatus(for: .video)
-        return status == .authorized
-    }
-    
-    //MARK: - SUPPORTING
-    
-    func tryToConfig() {
-        do { try configure()
-        } catch let er {
-            self.showAlert(er)
+    func requestLibraryAccess(callback: @escaping ()->()) {
+        PHPhotoLibrary.requestAuthorization { (_) in
+            DispatchQueue.main.async {
+                callback()
+            }
         }
     }
     
-    func showAlert(_ error: Error) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-        present(alert, animated: true, completion: nil)
-        
+    func requestAccessToCamera(callback: @escaping ()->()) {
+        if AVCaptureDevice.authorizationStatus(for: .video) == .notDetermined {
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                DispatchQueue.main.async {
+                    callback()
+                }
+            }
+        } else {
+            callback()
+        }
     }
     
-    //MARK: - SESSION CONFIGURATION
+    //MARK: - CAMERA SESSION
     
     func configure() throws {
-        guard session == nil else {
-            return
+        if Platform.isSimulator {
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Camera doesn't work in simulator"])
+            throw error
         }
         
         guard let backCamera = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back).devices.first else {
-            //TODO: drop exception
-            return
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Camera not found."])
+            throw error
         }
         
-        session = AVCaptureSession()
-        
         input = try AVCaptureDeviceInput(device: backCamera)
+
+        session = AVCaptureSession()
         session.addInput(input)
         
         output = AVCapturePhotoOutput()
@@ -148,6 +279,7 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
         
         preview = AVCaptureVideoPreviewLayer(session: session)
         preview.videoGravity = .resizeAspectFill
+        preview.frame = previewViewContainer.bounds
         previewViewContainer.layer.addSublayer(preview)
         
         session.startRunning()
@@ -178,7 +310,22 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
         }
     }
     
+    public func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+        
+        guard let buffer = photoSampleBuffer,
+            let data = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: buffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer),
+            let image = UIImage(data: data) else {
+                return
+        }
+        
+        openEdit(image)
+    }
+    
     //MARK: - IBACTIONS
+    
+    @IBAction func retryConfigure() {
+        updateInterfaceForStatus()
+    }
     
     @IBAction func takePhotoButtonAction(_ sender: Any) {
         makePhoto()
@@ -196,7 +343,22 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
         changeCamera()
     }
     
+    //MARK: ACTIONS
+    
+    func openEdit(_ image: UIImage) {
+        let vc = EditViewController.instance()
+        vc.image = image
+        vc.callback = self.callback
+        present(NavigationController(rootViewController: vc), animated: false, completion: nil)
+    }
+    
     //MARK: - PUBLIC ACTIONS
+    
+    public func makePhoto() {
+        output.capturePhoto(with: AVCapturePhotoSettings(format: nil), delegate: self)
+    }
+    
+    //MARK: IMAGE PICKER CONTROLLER
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         dismiss(animated: true) {
@@ -204,27 +366,5 @@ public class SGImagePickerViewController: UIViewController, AVCapturePhotoCaptur
                 self.openEdit(image)
             }
         }
-    }
-    
-    public func makePhoto() {
-        output.capturePhoto(with: AVCapturePhotoSettings(format: nil), delegate: self)
-    }
-    
-    public func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
-        
-        guard let buffer = photoSampleBuffer,
-            let data = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: buffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer),
-            let image = UIImage(data: data) else {
-                return
-        }
-        
-        openEdit(image)
-    }
-    
-    func openEdit(_ image: UIImage) {
-        let vc = EditViewController.instance()
-        vc.image = image
-        vc.callback = self.callback
-        present(NavigationController(rootViewController: vc), animated: false, completion: nil)
     }
 }

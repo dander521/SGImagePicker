@@ -22,6 +22,7 @@
 		512B885D1F60116F00B181B6 /* SupportingClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512B885C1F60116F00B181B6 /* SupportingClasses.swift */; };
 		512B885F1F60140C00B181B6 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512B885E1F60140C00B181B6 /* EditViewController.swift */; };
 		512B88611F602C3B00B181B6 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512B88601F602C3B00B181B6 /* Media.xcassets */; };
+		51812F1C1F6E789E0005DCD7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512B88601F602C3B00B181B6 /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,6 +305,7 @@
 			files = (
 				512B88381F5FF1D600B181B6 /* LaunchScreen.storyboard in Resources */,
 				512B88351F5FF1D600B181B6 /* Assets.xcassets in Resources */,
+				51812F1C1F6E789E0005DCD7 /* Media.xcassets in Resources */,
 				512B88331F5FF1D600B181B6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
